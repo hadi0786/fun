@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fries Evaluation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            overflow: hidden; /* Prevents scrolling */
+        }
+        .card {
+            width: 300px;
+            text-align: center;
+            position: relative;
+        }
+        .btn-yes {
+            position: absolute;
+        }
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .smiley {
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Ariha made good fries?</h5>
+            <button class="btn btn-primary btn-yes" id="yesBtn">Yes</button>
+            <button class="btn btn-danger" id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="responseModal" tabindex="-1" aria-labelledby="responseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="responseModalLabel">Response</h5>
+                </div>
+                <div class="modal-body">
+                    Yahhh, I know you not make good fries <span class="smiley">😊</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        let moving = false;
+
+        yesBtn.addEventListener('mouseenter', () => {
+            moving = true;
+            moveButton();
+        });
+
+        function moveButton() {
+            if (moving) {
+                const cardRect = document.querySelector('.card').getBoundingClientRect();
+                const maxX = window.innerWidth - yesBtn.clientWidth - cardRect.left;
+                const maxY = window.innerHeight - yesBtn.clientHeight - cardRect.top;
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                yesBtn.style.left = randomX + 'px';
+                yesBtn.style.top = randomY + 'px';
+            }
+        }
+
+        noBtn.addEventListener('click', () => {
+            $('#responseModal').modal('show');
+        });
+
+        yesBtn.addEventListener('mouseleave', () => {
+            moving = false;
+        });
+    </script>
+</body>
+</html>
